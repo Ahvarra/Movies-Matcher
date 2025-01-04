@@ -1,0 +1,10 @@
+@import "./base.module.scss";
+@import "@/styles/mixins.scss";
+
+@include respond-to("desktop") {
+	.movie-card {
+		width: 300px;
+		height: 450px;
+		border-radius: 12px;
+	}
+}

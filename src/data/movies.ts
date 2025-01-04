@@ -22,7 +22,7 @@ export const _moviesMockData: MovieProps[] = [
 	{
 		id: "3bc123d",
 		imageURL:
-			"https://upload.wikimedia.org/wikipedia/en/a/a2/Star_Wars_The_Force_Awakens_Theatrical_Poster.jpg",
+			"https://upload.wikimedia.org/wikipedia/en/thumb/f/fb/Gladiator_%282000_film_poster%29.png/220px-Gladiator_%282000_film_poster%29.png",
 		title: "Inception",
 		summary:
 			"Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",

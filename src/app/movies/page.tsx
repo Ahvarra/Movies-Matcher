@@ -1,4 +1,3 @@
-import { Title } from "@/components";
 import { getRecommendedMovies } from "@/controllers/movies";
 import { MoviesList } from "@/components/Movies";
 import { cookies } from "next/headers";
@@ -18,11 +17,6 @@ export default async function MoviesPage() {
 
 	return (
 		<section className="flex flex-col items-center justify-center min-h-screen">
-			<Title
-				title="Movies Matcher"
-				subtitle="Find your next favorite movie"
-				visibleDescription
-			/>
 			<MoviesList initialMovies={movies} initialCursor={cursor} />
 		</section>
 	);
