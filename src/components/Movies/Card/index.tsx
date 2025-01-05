@@ -10,8 +10,8 @@ export function MovieCard({
 	title,
 	rating,
 	summary,
-	handleAddMovieToFavorites,
-	handleRemoveMovie,
+	handleApproveMovie,
+	handleRejectMovie,
 	handleDirectionChange,
 }: MovieCardProps) {
 	return (
@@ -43,7 +43,7 @@ export function MovieCard({
 						aria-label="Dislike movie"
 						onClick={() => {
 							handleDirectionChange(-1);
-							handleRemoveMovie(id);
+							handleRejectMovie(id);
 						}}
 					>
 						<CrossIcon className={styles["movie-card__icon"]} />
@@ -53,7 +53,7 @@ export function MovieCard({
 						aria-label="Like movie"
 						onClick={() => {
 							handleDirectionChange(1);
-							handleAddMovieToFavorites(id);
+							handleApproveMovie(id);
 						}}
 					>
 						<HeartIcon className={styles["movie-card__icon"]} />

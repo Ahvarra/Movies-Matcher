@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "@/styles/global.scss";
 import { Header, Main, Footer } from "@/components";
 
@@ -6,7 +6,11 @@ export const metadata: Metadata = {
 	title: "Movie Matcher",
 	description:
 		"Find your next favorite movie with our Tinder-like movie recommendation app",
-	viewport: "width=device-width, initial-scale=1",
+};
+
+export const viewport: Viewport = {
+	width: "device-width",
+	initialScale: 1,
 };
 
 export default function RootLayout({

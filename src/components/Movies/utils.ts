@@ -1,3 +1,10 @@
+import { rejectMovie } from "@/controllers/movies";
+
+import { approveMovie } from "@/controllers/movies";
+import { MovieProps } from "@/types/Movies";
+import { SetStateAction } from "react";
+import { Dispatch } from "react";
+
 export const basicAnimationOptions = {
 	layout: "position" as const,
 	transition: {
@@ -44,4 +51,27 @@ export function getDependentAnimationOptions({
 			filter: exitDirection > 0 ? "brightness(1.15)" : "brightness(0.7)",
 		},
 	};
+}
+
+export async function handleMovieAction({
+	movieId,
+	action,
+	setProcessedIds,
+	setMovies,
+}: {
+	movieId: string;
+	action: "approve" | "reject";
+	setProcessedIds: Dispatch<SetStateAction<string[]>>;
+	setMovies: Dispatch<SetStateAction<MovieProps[]>>;
+}) {
+	try {
+		const chosenAction = action === "approve" ? approveMovie : rejectMovie;
+		const result = await chosenAction(movieId);
+		if (!result.success) return;
+
+		setProcessedIds((prev) => [...prev, movieId]);
+		setMovies((prev) => prev.filter((movie) => movie.id !== movieId));
+	} catch (error) {
+		console.error(`Error ${action}ing movie:`, error);
+	}
 }

@@ -1,8 +1,9 @@
 import { getRecommendedMovies } from "@/controllers/movies";
 import { MoviesList } from "@/components/Movies";
-import { cookies, headers } from "next/headers";
+import { headers } from "next/headers";
 import { Metadata, Viewport } from "next";
 import styles from "./rwd.module.scss";
+import { getProcessedMovies } from "@/controllers/movies/utils";
 
 export const metadata: Metadata = {
 	title: "Movies",
@@ -23,12 +24,7 @@ export default async function MoviesPage() {
 		? MOBILE_SLIDER_PER_VIEW
 		: DESKTOP_SLIDER_PER_VIEW;
 
-	const cookieStore = await cookies();
-	const processedMoviesCookie = cookieStore.get("processedMovies");
-	const processedIds = processedMoviesCookie
-		? JSON.parse(processedMoviesCookie.value)
-		: [];
-
+	const processedIds = await getProcessedMovies();
 	const { data: movies, cursor } = await getRecommendedMovies({
 		limit: 10,
 		processedIds,

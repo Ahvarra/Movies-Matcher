@@ -11,11 +11,11 @@ type UseMoviesHookProps = {
 	initialMovies: MovieProps[];
 };
 
-type UseMoviesHookReturn = {
+export type UseMoviesHookReturn = {
 	movies: MovieProps[];
 	exitDirection: number;
-	rejectMovie: (movieId: string) => void;
-	addMovieToFavorites: (movieId: string) => void;
+	handleApproveMovie: (movieId: string) => void;
+	handleRejectMovie: (movieId: string) => void;
 	handleDirectionChange: (direction: number) => void;
 	throttledHandleDirectionChange: (direction: number) => void;
 	message: string;

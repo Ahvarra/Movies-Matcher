@@ -1,51 +1,10 @@
-import { moviesMockData } from "@/data/movies";
+"use server";
+
 import { MovieProps } from "@/types/Movies";
 import { FetchResponseWithCursorResponse } from "@/types/server";
 import { GetMoviesOptions } from "./types";
+import { fetchMoviesFromDB, handleProcessingMovieAction } from "./utils";
 
-const DELAY_TIME = 300;
-
-const simulateNetworkDelay = (signal?: AbortSignal): Promise<void> => {
-	return new Promise((resolve, reject) => {
-		const timeout = setTimeout(resolve, DELAY_TIME);
-
-		signal?.addEventListener("abort", () => {
-			clearTimeout(timeout);
-			reject(new Error("Request Aborted"));
-		});
-	});
-};
-const fetchMoviesFromDB = async (
-	cursor: string | null,
-	limit: number,
-	processedIds: string[],
-	signal?: AbortSignal
-): Promise<MovieProps[]> => {
-	try {
-		if (signal?.aborted) throw new Error("Request Aborted");
-
-		await simulateNetworkDelay(signal);
-
-		let startIndex = 0;
-		if (cursor) {
-			const cursorIndex = moviesMockData.findIndex(
-				(movie) => movie.id === cursor
-			);
-			startIndex = cursorIndex + 1;
-		}
-
-		const moviesFromIndex = moviesMockData.slice(startIndex);
-		const filteredMovies = moviesFromIndex.filter(
-			(movie) => !processedIds.includes(movie.id)
-		);
-		const limitedMovies = filteredMovies.slice(0, limit);
-
-		return limitedMovies;
-	} catch (error) {
-		console.error("Error fetching movies from DB:", error);
-		throw error;
-	}
-};
 export const getRecommendedMovies = async ({
 	limit = 10,
 	cursor = null,
@@ -87,5 +46,23 @@ export const getRecommendedMovies = async ({
 	} catch (error) {
 		console.error("Error fetching movies:", error);
 		throw error;
+	}
+};
+
+export const approveMovie = async (movieId: string) => {
+	try {
+		return handleProcessingMovieAction(movieId, "approve");
+	} catch (error) {
+		console.error("Error approving movie:", error);
+		return { success: false, error: "Failed to approve movie" };
+	}
+};
+
+export const rejectMovie = async (movieId: string) => {
+	try {
+		return handleProcessingMovieAction(movieId, "reject");
+	} catch (error) {
+		console.error("Error rejecting movie:", error);
+		return { success: false, error: "Failed to reject movie" };
 	}
 };

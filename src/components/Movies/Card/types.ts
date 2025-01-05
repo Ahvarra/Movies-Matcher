@@ -1,7 +1,8 @@
 import { MovieProps } from "@/types/Movies";
+import { UseMoviesHookReturn } from "@/components/Movies/types";
 
-export type MovieCardProps = MovieProps & {
-	handleAddMovieToFavorites: (movieId: string) => void;
-	handleRemoveMovie: (movieId: string) => void;
-	handleDirectionChange: (direction: number) => void;
-};
+export type MovieCardProps = MovieProps &
+	Pick<
+		UseMoviesHookReturn,
+		"handleApproveMovie" | "handleRejectMovie" | "handleDirectionChange"
+	>;

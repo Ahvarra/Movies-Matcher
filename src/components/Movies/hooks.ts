@@ -3,9 +3,11 @@ import { UseMoviesHook } from "./types";
 import { getRecommendedMovies } from "@/controllers/movies";
 import throttle from "lodash.throttle";
 import { useAbortController } from "@/hooks/useAbortController";
+import { handleMovieAction } from "./utils";
 
 const MOVIES_THRESHOLD = 3;
 const THROTTLE_DELAY = 150;
+const AVAILABLE_ACTIONS = ["approve", "reject"] as const;
 
 export const useMovies: UseMoviesHook = ({ initialMovies }) => {
 	const { getController, abortAndReset } = useAbortController();
@@ -16,15 +18,15 @@ export const useMovies: UseMoviesHook = ({ initialMovies }) => {
 	const [processedIds, setProcessedIds] = useState<string[]>([]);
 	const [message, setMessage] = useState<string>("");
 
-	const rejectMovie = (movieId: string) => {
-		setProcessedIds((prev) => [...prev, movieId]);
-		setMovies((prev) => prev.filter((movie) => movie.id !== movieId));
-	};
-
-	const addMovieToFavorites = (movieId: string) => {
-		setProcessedIds((prev) => [...prev, movieId]);
-		setMovies((prev) => prev.filter((movie) => movie.id !== movieId));
-	};
+	const [handleApproveMovie, handleRejectMovie] = AVAILABLE_ACTIONS.map(
+		(action) => (movieId: string) =>
+			handleMovieAction({
+				action,
+				movieId,
+				setProcessedIds,
+				setMovies,
+			})
+	);
 
 	const handleDirectionChange = (direction: number) => {
 		setExitDirection(direction);
@@ -52,7 +54,6 @@ export const useMovies: UseMoviesHook = ({ initialMovies }) => {
 					processedIds,
 					limit: 10,
 					cursor: lastMovieId,
-					signal: controller.signal,
 				});
 
 				const isDataLoadedSuccessfully =
@@ -95,8 +96,8 @@ export const useMovies: UseMoviesHook = ({ initialMovies }) => {
 	return {
 		movies,
 		exitDirection,
-		rejectMovie,
-		addMovieToFavorites,
+		handleRejectMovie,
+		handleApproveMovie,
 		handleDirectionChange,
 		throttledHandleDirectionChange,
 		message,

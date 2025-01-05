@@ -11,8 +11,8 @@ export function MoviesList({ initialMovies, slidesPerView }: MoviesListProps) {
 		movies,
 		message,
 		exitDirection,
-		rejectMovie,
-		addMovieToFavorites,
+		handleRejectMovie,
+		handleApproveMovie,
 		handleDirectionChange,
 		throttledHandleDirectionChange,
 	} = useMovies({ initialMovies });
@@ -35,16 +35,16 @@ export function MoviesList({ initialMovies, slidesPerView }: MoviesListProps) {
 						if (!isSwipedEnough) return;
 						const isSwipedRight = swipeDistance > 0;
 						if (isSwipedRight) {
-							addMovieToFavorites(movie.id);
+							handleApproveMovie(movie.id);
 							return;
 						}
-						rejectMovie(movie.id);
+						handleRejectMovie(movie.id);
 					}}
 				>
 					<MovieCard
 						{...movie}
-						handleAddMovieToFavorites={addMovieToFavorites}
-						handleRemoveMovie={rejectMovie}
+						handleApproveMovie={handleApproveMovie}
+						handleRejectMovie={handleRejectMovie}
 						handleDirectionChange={handleDirectionChange}
 					/>
 				</motion.article>
