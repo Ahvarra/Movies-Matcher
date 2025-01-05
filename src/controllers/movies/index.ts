@@ -3,14 +3,30 @@ import { MovieProps } from "@/types/Movies";
 import { FetchResponseWithCursorResponse } from "@/types/server";
 import { GetMoviesOptions } from "./types";
 
+const DELAY_TIME = 300;
+
+const simulateNetworkDelay = (signal?: AbortSignal): Promise<void> => {
+	return new Promise((resolve, reject) => {
+		const timeout = setTimeout(resolve, DELAY_TIME);
+
+		signal?.addEventListener("abort", () => {
+			clearTimeout(timeout);
+			reject(new Error("Request Aborted"));
+		});
+	});
+};
 const fetchMoviesFromDB = async (
 	cursor: string | null,
 	limit: number,
-	processedIds: string[]
+	processedIds: string[],
+	signal?: AbortSignal
 ): Promise<MovieProps[]> => {
 	try {
-		let startIndex = 0;
+		if (signal?.aborted) throw new Error("Request Aborted");
 
+		await simulateNetworkDelay(signal);
+
+		let startIndex = 0;
 		if (cursor) {
 			const cursorIndex = moviesMockData.findIndex(
 				(movie) => movie.id === cursor
@@ -34,6 +50,7 @@ export const getRecommendedMovies = async ({
 	limit = 10,
 	cursor = null,
 	processedIds = [],
+	signal,
 }: GetMoviesOptions): Promise<FetchResponseWithCursorResponse<MovieProps>> => {
 	try {
 		const fetchMoviesBatch = async (
@@ -42,8 +59,9 @@ export const getRecommendedMovies = async ({
 		): Promise<FetchResponseWithCursorResponse<MovieProps>> => {
 			const newMovies = await fetchMoviesFromDB(
 				currentCursor,
-				limit,
-				processedIds
+				limit - accumulatedMovies.length,
+				processedIds,
+				signal
 			);
 
 			const allMovies = accumulatedMovies.concat(newMovies);

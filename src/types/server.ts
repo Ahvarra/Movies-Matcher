@@ -6,4 +6,5 @@ export type FetchResponseWithCursorResponse<T> = {
 export type FetchOptions = {
 	limit?: number;
 	cursor?: string | null;
+	signal?: AbortSignal;
 };

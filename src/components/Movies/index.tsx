@@ -13,6 +13,7 @@ export function MoviesList({ initialMovies, slidesPerView }: MoviesListProps) {
 		rejectMovie,
 		addMovieToFavorites,
 		handleDirectionChange,
+		throttledHandleDirectionChange,
 	} = useMovies({ initialMovies });
 
 	return (
@@ -25,7 +26,7 @@ export function MoviesList({ initialMovies, slidesPerView }: MoviesListProps) {
 						{...basicAnimationOptions}
 						{...getDependentAnimationOptions({ exitDirection })}
 						onDrag={(e, info) => {
-							handleDirectionChange(info.offset.x);
+							throttledHandleDirectionChange(info.offset.x);
 						}}
 						onDragEnd={(e, info) => {
 							const swipeDistance = info.offset.x;
