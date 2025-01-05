@@ -1,5 +1,4 @@
 export type TitleProps = {
 	title: string;
-	subtitle: string;
-	visibleDescription?: boolean;
+	subtitle?: string;
 };

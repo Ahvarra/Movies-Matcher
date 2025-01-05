@@ -1,10 +1,14 @@
 @use "sass:map";
-@use "../../styles/mixins" as mixins;
+@use "../styles/mixins" as mixins;
 @use "./base.module.scss";
 
 @include mixins.respond-to("desktop") {
 	.container {
 		position: relative;
 		gap: 1rem;
+	}
+
+	.listWrapper {
+		max-height: 500px;
 	}
 }

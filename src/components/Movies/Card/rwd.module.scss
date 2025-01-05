@@ -4,10 +4,10 @@
 
 @include mixins.respond-to("desktop") {
 	.movie-card {
-		width: 300px;
-		height: 450px;
-		border-radius: 12px;
+		width: auto;
 
 		aspect-ratio: 9/16;
+
+		overflow: hidden;
 	}
 }

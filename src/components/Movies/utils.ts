@@ -48,7 +48,7 @@ export function getDependentAnimationOptions({
 		},
 		whileDrag: {
 			rotate: exitDirection > 0 ? 3 : -3,
-			filter: exitDirection > 0 ? "brightness(1.15)" : "brightness(0.7)",
+			filter: exitDirection > 0 ? "brightness(1.25)" : "brightness(0.7)",
 		},
 	};
 }

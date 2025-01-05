@@ -64,42 +64,22 @@ h4,
 h5,
 h6 {
 	line-height: 1.2;
-	margin-bottom: var(--spacing-md);
 	font-weight: 600;
 }
 
 p {
-	margin-bottom: var(--spacing-md);
+	line-height: 1.2;
+	font-weight: 400;
 }
 
-// Utility classes
+// Global classes
 .container {
 	width: 100%;
 	max-width: 1200px;
 	margin: 0 auto;
-	padding: 0 var(--spacing-md);
+	padding: 0 var(--spacing-sm);
 }
 
-// Animacje
-.fade-enter {
-	opacity: 0;
-}
-
-.fade-enter-active {
-	opacity: 1;
-	transition: opacity var(--transition-normal);
-}
-
-.fade-exit {
-	opacity: 1;
-}
-
-.fade-exit-active {
-	opacity: 0;
-	transition: opacity var(--transition-normal);
-}
-
-// Media queries mixins
 $breakpoints: (
 	"tablet": 768px,
 	"desktop": 1024px,

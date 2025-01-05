@@ -1,8 +1,14 @@
+@use "../../../styles/variables" as *;
+
 .movie-card {
 	position: relative;
 
-	width: 100%;
+	max-width: 500px;
 	height: 100%;
+	width: 100%;
+
+	border-radius: var(--radius-lg);
+	box-shadow: 0 0 11px 5px rgba(0, 0, 0, 0.5);
 
 	overflow: hidden;
 

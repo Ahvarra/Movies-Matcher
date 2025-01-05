@@ -1,12 +1,11 @@
 import { TitleProps } from "@/types";
+import styles from "./rwd.module.scss";
 
-export function Title({ title, subtitle, visibleDescription }: TitleProps) {
+export function Title({ title, subtitle }: TitleProps) {
 	return (
-		<>
-			<h1 className="text-4xl font-bold">{title}</h1>
-			{visibleDescription && (
-				<p className="text-lg text-gray-500">{subtitle}</p>
-			)}
-		</>
+		<div className={styles.wrapper}>
+			<h1>{title}</h1>
+			{subtitle && <p>{subtitle}</p>}
+		</div>
 	);
 }
