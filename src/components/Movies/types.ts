@@ -18,6 +18,7 @@ type UseMoviesHookReturn = {
 	addMovieToFavorites: (movieId: string) => void;
 	handleDirectionChange: (direction: number) => void;
 	throttledHandleDirectionChange: (direction: number) => void;
+	message: string;
 };
 
 export type UseMoviesHook = (props: UseMoviesHookProps) => UseMoviesHookReturn;

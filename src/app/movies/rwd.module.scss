@@ -3,8 +3,8 @@
 @use "./base.module.scss";
 
 @include mixins.respond-to("desktop") {
-	.wrapper {
+	.container {
 		position: relative;
-		display: block;
+		gap: 1rem;
 	}
 }

@@ -2,6 +2,7 @@ import { getRecommendedMovies } from "@/controllers/movies";
 import { MoviesList } from "@/components/Movies";
 import { cookies, headers } from "next/headers";
 import { Metadata, Viewport } from "next";
+import styles from "./rwd.module.scss";
 
 export const metadata: Metadata = {
 	title: "Movies",
@@ -30,12 +31,11 @@ export default async function MoviesPage() {
 
 	const { data: movies, cursor } = await getRecommendedMovies({
 		limit: 10,
-		cursor: null,
 		processedIds,
 	});
 
 	return (
-		<section>
+		<section className={styles.container}>
 			<MoviesList
 				initialMovies={movies}
 				initialCursor={cursor}

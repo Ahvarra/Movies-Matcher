@@ -14,6 +14,7 @@ export const useMovies: UseMoviesHook = ({ initialMovies }) => {
 	const [movies, setMovies] = useState(initialMovies);
 	const [exitDirection, setExitDirection] = useState(0);
 	const [processedIds, setProcessedIds] = useState<string[]>([]);
+	const [message, setMessage] = useState<string>("");
 
 	const rejectMovie = (movieId: string) => {
 		setProcessedIds((prev) => [...prev, movieId]);
@@ -58,6 +59,9 @@ export const useMovies: UseMoviesHook = ({ initialMovies }) => {
 					!controller.signal.aborted && result.data;
 				if (!isDataLoadedSuccessfully) return;
 
+				const isAnyMovieLoaded = result.data.length > 0;
+				if (!isAnyMovieLoaded) return;
+
 				setMovies((prev) => [...prev, ...result.data]);
 			} catch (error) {
 				if (error instanceof Error && error.name !== "AbortError") {
@@ -81,6 +85,13 @@ export const useMovies: UseMoviesHook = ({ initialMovies }) => {
 		};
 	}, [throttledHandleDirectionChange]);
 
+	useEffect(() => {
+		const isAnyMovieToLoad = movies.length > 0;
+		if (isAnyMovieToLoad) return;
+
+		setMessage("No more movies to load for You, sir!");
+	}, [movies.length]);
+
 	return {
 		movies,
 		exitDirection,
@@ -88,5 +99,6 @@ export const useMovies: UseMoviesHook = ({ initialMovies }) => {
 		addMovieToFavorites,
 		handleDirectionChange,
 		throttledHandleDirectionChange,
+		message,
 	};
 };
