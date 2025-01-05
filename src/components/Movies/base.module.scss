@@ -1,0 +1,23 @@
+.container {
+	position: relative;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	width: 100%;
+	max-width: 100vw;
+	min-height: 100vh;
+	padding: 1rem;
+}
+
+.wrapper {
+	position: absolute;
+	inset: 0;
+
+	width: 100%;
+	height: calc(100vh - 2rem);
+	margin: auto;
+
+	overflow-y: hidden;
+}

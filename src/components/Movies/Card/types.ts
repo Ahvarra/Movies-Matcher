@@ -1,3 +1,5 @@
 import { MovieProps } from "@/types/Movies";
 
-export type MovieCardProps = Omit<MovieProps, "id"> & {};
+export type MovieCardProps = Omit<MovieProps, "id"> & {
+	onRemove: () => void;
+};

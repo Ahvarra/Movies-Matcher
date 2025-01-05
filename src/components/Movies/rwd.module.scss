@@ -1,0 +1,16 @@
+@import "./base.module.scss";
+@import "@/styles/mixins.scss";
+
+.container {
+	@include respond-to("desktop") {
+		position: relative;
+		gap: 1rem;
+	}
+}
+
+.wrapper {
+	@include respond-to("desktop") {
+		position: relative;
+		display: block;
+	}
+}

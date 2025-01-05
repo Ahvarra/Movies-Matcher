@@ -1,8 +1,17 @@
 import { getRecommendedMovies } from "@/controllers/movies";
 import { MoviesList } from "@/components/Movies";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
+
+const MOBILE_SLIDER_PER_VIEW = 1;
+const DESKTOP_SLIDER_PER_VIEW = 3;
 
 export default async function MoviesPage() {
+	const headersList = await headers();
+	const isMobile = headersList.get("x-is-mobile") === "true";
+	const slidesPerView = isMobile
+		? MOBILE_SLIDER_PER_VIEW
+		: DESKTOP_SLIDER_PER_VIEW;
+
 	const cookieStore = await cookies();
 	const processedMoviesCookie = cookieStore.get("processedMovies");
 	const processedIds = processedMoviesCookie
@@ -16,8 +25,13 @@ export default async function MoviesPage() {
 	});
 
 	return (
-		<section className="flex flex-col items-center justify-center min-h-screen">
-			<MoviesList initialMovies={movies} initialCursor={cursor} />
+		<section>
+			<MoviesList
+				initialMovies={movies}
+				initialCursor={cursor}
+				slidesPerView={slidesPerView}
+				isMobile={isMobile}
+			/>
 		</section>
 	);
 }
