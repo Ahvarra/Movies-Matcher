@@ -1,5 +1,5 @@
-@import "./_variables";
-@import "./_mixins";
+@use "./_variables" as *;
+@use "./_mixins" as *;
 
 :root {
 	--color-primary: #{$color-primary};
@@ -53,6 +53,7 @@ body {
 	background-color: var(--color-background);
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	overflow-x: hidden;
 }
 
 // Typography

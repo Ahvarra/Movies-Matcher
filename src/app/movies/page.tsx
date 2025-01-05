@@ -1,6 +1,16 @@
 import { getRecommendedMovies } from "@/controllers/movies";
 import { MoviesList } from "@/components/Movies";
 import { cookies, headers } from "next/headers";
+import { Metadata, Viewport } from "next";
+
+export const metadata: Metadata = {
+	title: "Movies",
+};
+
+export const viewport: Viewport = {
+	width: "device-width",
+	initialScale: 1,
+};
 
 const MOBILE_SLIDER_PER_VIEW = 1;
 const DESKTOP_SLIDER_PER_VIEW = 3;
