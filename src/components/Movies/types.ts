@@ -6,3 +6,17 @@ export type MoviesListProps = {
 	isMobile: boolean;
 	initialCursor?: string | null;
 };
+
+type UseMoviesHookProps = {
+	initialMovies: MovieProps[];
+};
+
+type UseMoviesHookReturn = {
+	movies: MovieProps[];
+	exitDirection: number;
+	rejectMovie: (movieId: string) => void;
+	addMovieToFavorites: (movieId: string) => void;
+	handleDirectionChange: (direction: number) => void;
+};
+
+export type UseMoviesHook = (props: UseMoviesHookProps) => UseMoviesHookReturn;

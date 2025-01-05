@@ -3,14 +3,16 @@ import Image from "next/image";
 import { MovieCardProps } from "./types";
 import styles from "./rwd.module.scss";
 import { CrossIcon, HeartIcon } from "@/components/Icons";
-import { motion } from "framer-motion";
 
 export function MovieCard({
+	id,
 	imageURL,
 	title,
 	rating,
 	summary,
-	onRemove,
+	handleAddMovieToFavorites,
+	handleRemoveMovie,
+	handleDirectionChange,
 }: MovieCardProps) {
 	return (
 		<div className={styles["movie-card"]}>
@@ -39,12 +41,20 @@ export function MovieCard({
 					<button
 						className={`${styles["movie-card__button"]} ${styles["movie-card__button--dislike"]}`}
 						aria-label="Dislike movie"
+						onClick={() => {
+							handleDirectionChange(-1);
+							handleRemoveMovie(id);
+						}}
 					>
 						<CrossIcon className={styles["movie-card__icon"]} />
 					</button>
 					<button
 						className={`${styles["movie-card__button"]} ${styles["movie-card__button--like"]}`}
 						aria-label="Like movie"
+						onClick={() => {
+							handleDirectionChange(1);
+							handleAddMovieToFavorites(id);
+						}}
 					>
 						<HeartIcon className={styles["movie-card__icon"]} />
 					</button>
