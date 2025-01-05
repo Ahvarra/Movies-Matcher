@@ -1,14 +1,21 @@
 import { MovieProps } from "@/types/Movies";
 
+export type MoviesMatcherOptions = {
+	MOVIES_THRESHOLD: number;
+	THROTTLE_DELAY: number;
+};
+
 export type MoviesListProps = {
 	initialMovies: MovieProps[];
 	slidesPerView: number;
 	isMobile: boolean;
 	initialCursor?: string | null;
+	moviesMatcherOptions: MoviesMatcherOptions;
 };
 
 type UseMoviesHookProps = {
 	initialMovies: MovieProps[];
+	moviesMatcherOptions: MoviesMatcherOptions;
 };
 
 export type UseMoviesHookReturn = {

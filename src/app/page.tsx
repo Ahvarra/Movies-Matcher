@@ -4,9 +4,12 @@ import { headers } from "next/headers";
 import styles from "./rwd.module.scss";
 import { getProcessedMovies } from "@/controllers/movies/utils";
 import { Title } from "@/components";
+import { MoviesMatcherOptions } from "@/components/Movies/types";
 
 const MOBILE_SLIDER_PER_VIEW = 1;
 const DESKTOP_SLIDER_PER_VIEW = 3;
+const DEFAULT_MOVIES_THRESHOLD = 3;
+const DEFAULT_THROTTLE_DELAY = 150;
 
 export default async function MoviesPage() {
 	const headersList = await headers();
@@ -21,6 +24,11 @@ export default async function MoviesPage() {
 		processedIds,
 	});
 
+	const moviesMatcherOptions: MoviesMatcherOptions = {
+		MOVIES_THRESHOLD: DEFAULT_MOVIES_THRESHOLD,
+		THROTTLE_DELAY: DEFAULT_THROTTLE_DELAY,
+	};
+
 	return (
 		<section className={styles.container}>
 			<div className={styles.titleWrapper}>
@@ -32,6 +40,7 @@ export default async function MoviesPage() {
 					initialCursor={cursor}
 					slidesPerView={slidesPerView}
 					isMobile={isMobile}
+					moviesMatcherOptions={moviesMatcherOptions}
 				/>
 			</div>
 		</section>

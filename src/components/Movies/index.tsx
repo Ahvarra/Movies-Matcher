@@ -6,7 +6,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import { basicAnimationOptions, getDependentAnimationOptions } from "./utils";
 import { useMovies } from "./hooks";
 
-export function MoviesList({ initialMovies, slidesPerView }: MoviesListProps) {
+export function MoviesList({
+	initialMovies,
+	slidesPerView,
+	moviesMatcherOptions,
+}: MoviesListProps) {
 	const {
 		movies,
 		message,
@@ -15,11 +19,11 @@ export function MoviesList({ initialMovies, slidesPerView }: MoviesListProps) {
 		handleApproveMovie,
 		handleDirectionChange,
 		throttledHandleDirectionChange,
-	} = useMovies({ initialMovies });
+	} = useMovies({ initialMovies, moviesMatcherOptions });
 
 	return (
 		<AnimatePresence mode="popLayout" initial={true}>
-			{message ? <h2 className={styles.message}>{message}</h2> : null}
+			{message && <h2 className={styles.message}>{message}</h2>}
 			{movies.slice(0, slidesPerView).map((movie) => (
 				<motion.article
 					key={movie.id}

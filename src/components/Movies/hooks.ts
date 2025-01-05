@@ -5,11 +5,12 @@ import throttle from "lodash.throttle";
 import { useAbortController } from "@/hooks/useAbortController";
 import { handleMovieAction } from "./utils";
 
-const MOVIES_THRESHOLD = 3;
-const THROTTLE_DELAY = 150;
 const AVAILABLE_ACTIONS = ["approve", "reject"] as const;
 
-export const useMovies: UseMoviesHook = ({ initialMovies }) => {
+export const useMovies: UseMoviesHook = ({
+	initialMovies,
+	moviesMatcherOptions,
+}) => {
 	const { getController, abortAndReset } = useAbortController();
 	const isLoadingRef = useRef(false);
 
@@ -33,12 +34,17 @@ export const useMovies: UseMoviesHook = ({ initialMovies }) => {
 	};
 
 	const throttledHandleDirectionChange = useMemo(
-		() => throttle((x: number) => handleDirectionChange(x), THROTTLE_DELAY),
+		() =>
+			throttle(
+				(x: number) => handleDirectionChange(x),
+				moviesMatcherOptions.THROTTLE_DELAY
+			),
 		[handleDirectionChange]
 	);
 
 	useEffect(() => {
-		const shouldLoadMore = movies.length <= MOVIES_THRESHOLD;
+		const shouldLoadMore =
+			movies.length <= moviesMatcherOptions.MOVIES_THRESHOLD;
 		if (!shouldLoadMore || isLoadingRef.current) return;
 
 		const loadMoreMovies = async () => {
