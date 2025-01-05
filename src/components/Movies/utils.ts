@@ -38,13 +38,17 @@ export function getDependentAnimationOptions({
 	return {
 		initial: {
 			opacity: 0,
-			x: exitDirection < 0 ? 500 : -500,
+			x: exitDirection < 0 ? 300 : -300,
 			scale: 1,
 		},
 		exit: {
 			opacity: 0,
-			x: exitDirection < 0 ? -500 : 500,
-			scale: 1,
+			x: exitDirection < 0 ? -300 : 300,
+			rotate: exitDirection > 0 ? 3 : -3,
+			scale: 0.5,
+			transition: {
+				duration: 0.2,
+			},
 		},
 		whileDrag: {
 			rotate: exitDirection > 0 ? 3 : -3,
@@ -66,8 +70,8 @@ export async function handleMovieAction({
 }) {
 	try {
 		const chosenAction = action === "approve" ? approveMovie : rejectMovie;
-		const result = await chosenAction(movieId);
-		if (!result.success) return;
+		chosenAction(movieId);
+		// if (!result.success) return;
 
 		setProcessedIds((prev) => [...prev, movieId]);
 		setMovies((prev) => prev.filter((movie) => movie.id !== movieId));
